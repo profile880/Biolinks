@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>خدمات التمريض المنزلي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --teal:#0F6E56;--teal-light:#E1F5EE;--teal-mid:#1D9E75;--teal-dark:#085041;
+  --cream:#FAFAF8;--white:#fff;--text:#1a1a2e;--muted:#5F5E5A;
+  --border:rgba(0,0,0,0.1);--accent:#D85A30;--accent-light:#FAECE7;
+}
+html,body{height:100%;background:#e8ede8}
+body{font-family:'Tajawal',sans-serif;direction:rtl;display:flex;justify-content:center;align-items:flex-start;padding:0}
+.app{width:100%;max-width:480px;margin:0 auto;background:var(--white);min-height:100vh;position:relative;overflow-x:hidden;box-shadow:0 0 40px rgba(0,0,0,0.15)}
+
+/* NAV */
+.nav{background:var(--teal);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-title{color:#fff;font-size:17px;font-weight:700;font-family:'Amiri',serif}
+.nav-back{background:rgba(255,255,255,0.2);border:none;color:#fff;padding:6px 14px;border-radius:20px;font-family:'Tajawal',sans-serif;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background 0.2s}
+.nav-back:hover{background:rgba(255,255,255,0.35)}
+
+/* SCREENS */
+.screen{display:none;min-height:100vh;animation:fadeIn 0.3s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* HOME */
+.hero{background:linear-gradient(135deg,var(--teal-dark) 0%,var(--teal-mid) 60%,#5DCAA5 100%);padding:32px 20px 26px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50px;left:-50px;width:220px;height:220px;background:rgba(255,255,255,0.05);border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-70px;right:-40px;width:200px;height:200px;background:rgba(255,255,255,0.05);border-radius:50%}
+.logo-icon{width:64px;height:64px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;border:2px solid rgba(255,255,255,0.3);position:relative;z-index:1}
+.slogan{font-family:'Amiri',serif;color:#fff;font-size:19px;font-weight:700;line-height:1.5;margin-bottom:6px;position:relative;z-index:1}
+.slogan-sub{color:rgba(255,255,255,0.75);font-size:13px;position:relative;z-index:1}
+
+.hero-img{width:100%;height:170px;background:#E1F5EE;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.info-bar{background:var(--teal-light);padding:10px 16px;font-size:12px;color:var(--teal-dark);text-align:center;border-bottom:0.5px solid rgba(15,110,86,0.2)}
+
+.grid-4{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:18px}
+.card-icon{background:var(--white);border:0.5px solid var(--border);border-radius:18px;padding:22px 12px 18px;text-align:center;cursor:pointer;transition:all 0.22s;box-shadow:0 2px 10px rgba(0,0,0,0.05)}
+.card-icon:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(15,110,86,0.14);border-color:var(--teal-mid)}
+.card-icon:active{transform:scale(0.96)}
+.icon-circle{width:54px;height:54px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center}
+.ic-teal{background:var(--teal-light)}
+.ic-accent{background:var(--accent-light)}
+.ic-blue{background:#E6F1FB}
+.ic-amber{background:#FAEEDA}
+.card-icon h3{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px}
+.card-icon p{font-size:11px;color:var(--muted);line-height:1.4}
+
+/* INNER PAGES */
+.page-header{background:var(--teal);padding:22px 20px;text-align:center}
+.page-header .tagline{font-family:'Amiri',serif;color:#fff;font-size:17px;font-weight:700;line-height:1.5}
+.page-header .sub{color:rgba(255,255,255,0.7);font-size:12px;margin-top:5px}
+
+/* FORMS */
+.form-wrap{padding:18px}
+.form-group{margin-bottom:15px}
+.form-group label{display:block;font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 13px;border:0.5px solid var(--border);border-radius:10px;font-family:'Tajawal',sans-serif;font-size:14px;color:var(--text);background:var(--white);outline:none;transition:border 0.2s;-webkit-appearance:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--teal-mid);box-shadow:0 0 0 3px rgba(29,158,117,0.08)}
+.form-group textarea{resize:vertical;min-height:80px;line-height:1.6}
+.file-upload{border:1.5px dashed rgba(15,110,86,0.3);border-radius:10px;padding:18px;text-align:center;cursor:pointer;background:#FAFAFA;transition:all 0.2s}
+.file-upload:hover{border-color:var(--teal-mid);background:var(--teal-light)}
+.file-upload p{font-size:12px;color:var(--muted);margin-top:6px}
+
+.btn-primary{width:100%;background:var(--teal);color:#fff;border:none;padding:14px;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;transition:all 0.2s;letter-spacing:0.3px}
+.btn-primary:hover{background:var(--teal-dark)}
+.btn-primary:active{transform:scale(0.98)}
+.btn-secondary{width:100%;background:transparent;color:var(--teal);border:1.5px solid var(--teal);padding:12px;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:500;cursor:pointer;margin-top:10px;transition:all 0.2s}
+.btn-secondary:hover{background:var(--teal-light)}
+
+/* CHAT */
+.chat-area{padding:16px;min-height:260px;background:#F5F5F0;display:flex;flex-direction:column;gap:10px}
+.msg-bubble{background:#fff;border:0.5px solid var(--border);border-radius:12px 12px 12px 2px;padding:11px 14px;font-size:13px;color:var(--text);max-width:86%;line-height:1.6;box-shadow:0 1px 4px rgba(0,0,0,0.05)}
+.msg-bubble.sent{align-self:flex-end;background:var(--teal);color:#fff;border-radius:12px 12px 2px 12px;border:none}
+.chat-input-area{padding:12px 16px;border-top:0.5px solid var(--border);display:flex;gap:8px;background:#fff}
+.chat-input-area input{flex:1;padding:11px 14px;border:0.5px solid var(--border);border-radius:22px;font-family:'Tajawal',sans-serif;font-size:14px;outline:none;transition:border 0.2s}
+.chat-input-area input:focus{border-color:var(--teal-mid)}
+.chat-send{background:var(--teal);border:none;color:#fff;width:42px;height:42px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.2s}
+.chat-send:hover{background:var(--teal-dark)}
+
+/* STARS */
+.stars-wrap{display:flex;justify-content:center;gap:10px;padding:24px;flex-direction:row-reverse}
+.star{font-size:44px;cursor:pointer;color:#D3D1C7;transition:all 0.15s;user-select:none;-webkit-user-select:none}
+.star.active{color:#EF9F27}
+.star:hover{transform:scale(1.18)}
+.rating-text{text-align:center;font-size:16px;font-weight:500;color:var(--text);margin-bottom:8px;min-height:26px}
+
+/* SUB GRIDS */
+.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}
+.sub-card{background:var(--white);border:0.5px solid var(--border);border-radius:14px;padding:18px 10px;text-align:center;cursor:pointer;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.sub-card:hover{border-color:var(--teal-mid);box-shadow:0 5px 16px rgba(15,110,86,0.12)}
+.sub-card:active{transform:scale(0.97)}
+.sub-card-icon{width:48px;height:48px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.sub-card h4{font-size:12px;font-weight:700;color:var(--text)}
+.sub-card p{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.4}
+
+/* CHECKBOXES */
+.check-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.check-item{display:flex;align-items:center;gap:6px;font-size:13px;background:#F5F5F0;padding:7px 12px;border-radius:22px;cursor:pointer;border:0.5px solid transparent;transition:all 0.15s}
+.check-item:hover{border-color:var(--teal-mid);background:var(--teal-light)}
+.check-item input{accent-color:var(--teal);width:14px;height:14px}
+
+/* LOGIN MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;z-index:1000;padding:24px}
+.modal-box{background:#fff;border-radius:22px;padding:30px 26px;width:100%;max-width:340px;animation:fadeIn 0.25s ease}
+.modal-box h2{font-size:21px;font-weight:700;color:var(--text);margin-bottom:5px;text-align:center}
+.modal-box p{font-size:13px;color:var(--muted);text-align:center;margin-bottom:22px}
+.modal-input{width:100%;padding:12px 14px;border:0.5px solid var(--border);border-radius:10px;font-family:'Tajawal',sans-serif;font-size:14px;margin-bottom:11px;outline:none;transition:border 0.2s}
+.modal-input:focus{border-color:var(--teal-mid);box-shadow:0 0 0 3px rgba(29,158,117,0.08)}
+.modal-close{text-align:center;margin-top:14px;font-size:13px;color:var(--muted);cursor:pointer;text-decoration:underline}
+
+/* SUCCESS */
+.success-msg{background:#E1F5EE;border:1px solid #5DCAA5;border-radius:12px;padding:14px;text-align:center;margin:12px 0;font-size:14px;color:var(--teal-dark);display:none;font-weight:500}
+
+/* TIME ROW */
+.time-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.time-row label{font-size:11px;color:var(--muted);display:block;margin-bottom:4px}
+
+/* REQUIRED BADGE */
+.required-badge{background:#FAECE7;border-radius:10px;padding:11px 14px;margin-bottom:14px;font-size:13px;color:#993C1D;display:flex;align-items:center;gap:8px;border:0.5px solid rgba(153,60,29,0.2)}
+
+/* GRID FULL */
+.grid-full{grid-column:1/-1}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 16px;border-top:0.5px solid var(--border);margin-top:8px}
+.footer p{font-size:11px;color:var(--muted);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal" style="display:none">
+  <div class="modal-box">
+    <div style="width:54px;height:54px;background:var(--teal-light);border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <h2>تسجيل الدخول</h2>
+    <p>يُرجى تسجيل الدخول للوصول إلى هذه الخدمة</p>
+    <input class="modal-input" type="email" placeholder="البريد الإلكتروني" id="loginEmail"/>
+    <input class="modal-input" type="password" placeholder="كلمة المرور" id="loginPass"/>
+    <button class="btn-primary" style="margin-top:4px" onclick="doLogin()">دخول</button>
+    <p class="modal-close" onclick="closeModal()">إغلاق</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: HOME
+═══════════════════════════════════════ -->
+<div class="screen active" id="screen-home">
+  <div class="hero">
+    <div class="logo-icon">
+      <svg width="34" height="34" viewBox="0 0 32 32" fill="white"><path d="M16 4C12 4 9 7 9 11c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z" opacity="0.3"/><rect x="13" y="8" width="6" height="2" rx="1"/><rect x="14.5" y="7" width="3" height="5" rx="1"/><circle cx="16" cy="11" r="4" fill="none" stroke="white" stroke-width="1.5"/><path d="M10 20 Q8 22 8 25 L24 25 Q24 22 22 20" fill="none" stroke="white" stroke-width="1.5"/></svg>
+    </div>
+    <div class="slogan">نحن نصنع الفرق في حياة المرضى</div>
+    <div class="slogan-sub">خدمات التمريض المنزلي الاحترافية — على مدار الساعة</div>
+  </div>
+
+  <!-- Nurse Illustration -->
+  <div class="hero-img">
+    <svg width="100%" height="170" viewBox="0 0 400 170" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <rect width="400" height="170" fill="#E1F5EE"/>
+      <!-- decorative circles -->
+      <circle cx="380" cy="20" r="40" fill="#9FE1CB" opacity="0.3"/>
+      <circle cx="20" cy="150" r="50" fill="#5DCAA5" opacity="0.15"/>
+      <!-- Nurse 1 (left) -->
+      <circle cx="100" cy="48" r="22" fill="#5DCAA5"/>
+      <rect x="86" y="70" width="28" height="40" rx="8" fill="white" stroke="#5DCAA5" stroke-width="1.5"/>
+      <rect x="86" y="70" width="28" height="8" rx="4" fill="#0F6E56"/>
+      <rect x="92" y="55" width="16" height="2.5" rx="1.2" fill="white"/>
+      <rect x="98.5" y="49" width="3" height="10" rx="1.5" fill="white"/>
+      <rect x="84" y="74" width="6" height="20" rx="3" fill="#9FE1CB"/>
+      <rect x="114" y="74" width="6" height="20" rx="3" fill="#9FE1CB"/>
+      <!-- Patient in bed -->
+      <rect x="160" y="88" width="80" height="18" rx="8" fill="#D3D1C7"/>
+      <rect x="155" y="70" width="90" height="22" rx="6" fill="white" stroke="#D3D1C7" stroke-width="1"/>
+      <circle cx="200" cy="58" r="16" fill="#FAC775"/>
+      <rect x="185" y="70" width="30" height="22" rx="4" fill="#E6F1FB"/>
+      <!-- IV bag -->
+      <line x1="155" y1="40" x2="155" y2="80" stroke="#B4B2A9" stroke-width="1.5"/>
+      <rect x="147" y="28" width="16" height="20" rx="4" fill="white" stroke="#B4B2A9" stroke-width="1"/>
+      <line x1="155" y1="48" x2="162" y2="72" stroke="#5DCAA5" stroke-width="1" stroke-dasharray="2,2"/>
+      <!-- Nurse 2 (right) -->
+      <circle cx="310" cy="48" r="20" fill="#9FE1CB"/>
+      <rect x="298" y="68" width="24" height="38" rx="7" fill="white" stroke="#9FE1CB" stroke-width="1.5"/>
+      <rect x="298" y="68" width="24" height="7" rx="3" fill="#1D9E75"/>
+      <!-- stethoscope -->
+      <path d="M316 82 Q324 82 324 90 Q324 98 316 98" stroke="#0F6E56" stroke-width="1.8" fill="none"/>
+      <circle cx="315" cy="98" r="3.5" fill="#0F6E56"/>
+      <rect x="296" y="72" width="6" height="18" rx="3" fill="#9FE1CB"/>
+      <rect x="318" y="72" width="6" height="18" rx="3" fill="#9FE1CB"/>
+      <!-- hearts -->
+      <text x="350" y="52" font-size="16" fill="#D85A30" opacity="0.6">♥</text>
+      <text x="60" y="38" font-size="12" fill="#0F6E56" opacity="0.5">♥</text>
+      <text x="240" y="40" font-size="10" fill="#0F6E56" opacity="0.4">✦</text>
+      <!-- ground line -->
+      <line x1="30" y1="110" x2="370" y2="110" stroke="#B4B2A9" stroke-width="1"/>
+      <!-- shadow -->
+      <ellipse cx="100" cy="112" rx="18" ry="3" fill="#B4B2A9" opacity="0.3"/>
+      <ellipse cx="200" cy="112" rx="30" ry="3" fill="#B4B2A9" opacity="0.2"/>
+      <ellipse cx="310" cy="112" rx="16" ry="3" fill="#B4B2A9" opacity="0.3"/>
+    </svg>
+  </div>
+
+  <div class="info-bar">⚡ بعض الخدمات تتطلب تسجيل الدخول — انقر للوصول إليها</div>
+
+  <div class="grid-4">
+    <div class="card-icon" onclick="requireLogin('screen-planning')">
+      <div class="icon-circle ic-teal">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg>
+      </div>
+      <h3>تخطيط التشغيل</h3>
+      <p>تسجيل الممرضين والكوادر الطبية</p>
+    </div>
+    <div class="card-icon" onclick="requireLogin('screen-consult')">
+      <div class="icon-circle ic-blue">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h3>استشارة شبه طبية</h3>
+      <p>تواصل مع متخصصينا مباشرة</p>
+    </div>
+    <div class="card-icon" onclick="gotoScreen('screen-rating')">
+      <div class="icon-circle ic-amber">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#BA7517" stroke-width="1.8"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+      </div>
+      <h3>تقييم التطبيق</h3>
+      <p>شاركنا رأيك وتجربتك</p>
+    </div>
+    <div class="card-icon" onclick="requireLogin('screen-patient-portal')">
+      <div class="icon-circle ic-accent">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#993C1D" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>بوابة المريض</h3>
+      <p>خدمات وتسجيل المرضى</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>خدمات التمريض المنزلي الاحترافية<br>متوفرون على مدار الساعة — 7 أيام في الأسبوع</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: PLANNING
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-planning">
+  <div class="nav">
+    <div class="nav-title">تخطيط التشغيل</div>
+    <button class="nav-back" onclick="gotoScreen('screen-home')">← الرئيسية</button>
+  </div>
+  <div class="page-header">
+    <div class="tagline">كل خدمة تُقدِّمها تُغيِّر حياة المرضى للأفضل</div>
+    <div class="sub">سجّل بياناتك للانضمام إلى فريقنا</div>
+  </div>
+  <div class="form-wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="form-group"><label>الاسم</label><input type="text" placeholder="الاسم الأول"/></div>
+      <div class="form-group"><label>اللقب</label><input type="text" placeholder="اللقب"/></div>
+    </div>
+    <div class="form-group"><label>رقم الهاتف</label><input type="tel" placeholder="05xxxxxxxx"/></div>
+    <div class="form-group"><label>البريد الإلكتروني</label><input type="email" placeholder="example@email.com"/></div>
+    <div class="form-group"><label>العنوان</label><input type="text" placeholder="الولاية، البلدية..."/></div>
+    <div class="form-group">
+      <label>الجنس</label>
+      <select><option value="">اختر الجنس...</option><option>ذكر</option><option>أنثى</option></select>
+    </div>
+    <div class="form-group">
+      <label>شهادة التخرج في التكوين شبه الطبي</label>
+      <div class="file-upload" onclick="this.querySelector('input').click()">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p>انقر لرفع شهادة التخرج (PDF / JPG)</p>
+        <input type="file" accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="updateFileLabel(this)"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>السيرة الذاتية</label>
+      <div class="file-upload" onclick="this.querySelector('input').click()">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <p>انقر لرفع السيرة الذاتية (PDF)</p>
+        <input type="file" accept=".pdf,.doc,.docx" style="display:none" onchange="updateFileLabel(this)"/>
+      </div>
+    </div>
+    <div class="success-msg" id="success-planning">✓ تم إرسال طلب التسجيل بنجاح! سنتواصل معك في أقرب وقت.</div>
+    <button class="btn-primary" onclick="showSuccess('success-planning')">إرسال الطلب</button>
+    <button class="btn-secondary" onclick="gotoScreen('screen-home')">العودة للرئيسية</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: CONSULT
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-consult">
+  <div class="nav">
+    <div class="nav-title">الاستشارة الشبه طبية</div>
+    <button class="nav-back" onclick="gotoScreen('screen-home')">← الرئيسية</button>
+  </div>
+  <div class="page-header">
+    <div class="tagline">دوماً في استقبال استشاراتكم الشبه طبية</div>
+    <div class="sub">فريقنا جاهز للإجابة على كل تساؤلاتكم</div>
+  </div>
+  <div class="chat-area" id="chatArea">
+    <div class="msg-bubble">مرحباً! كيف يمكننا مساعدتك اليوم؟ 😊<br>اكتب استشارتك وسنرد عليك في أقرب وقت ممكن.</div>
+  </div>
+  <div class="chat-input-area">
+    <input type="text" id="chatInput" placeholder="اكتب استشارتك هنا..." onkeypress="if(event.key==='Enter')sendMsg()"/>
+    <button class="chat-send" onclick="sendMsg()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+  <div style="padding:14px 16px 20px">
+    <button class="btn-secondary" onclick="gotoScreen('screen-home')">العودة للرئيسية</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: RATING
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-rating">
+  <div class="nav">
+    <div class="nav-title">تقييم التطبيق</div>
+    <button class="nav-back" onclick="gotoScreen('screen-home')">← الرئيسية</button>
+  </div>
+  <div style="padding:32px 24px;text-align:center">
+    <div style="font-size:48px;margin-bottom:12px">⭐</div>
+    <h2 style="font-size:22px;font-weight:700;color:var(--text);margin-bottom:8px">قيِّم تجربتك معنا</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.6">رأيك يساعدنا على تقديم خدمة أفضل لجميع مرضانا</p>
+    <div class="stars-wrap" id="starsContainer">
+      <span class="star" data-v="5" onclick="setRating(5)">★</span>
+      <span class="star" data-v="4" onclick="setRating(4)">★</span>
+      <span class="star" data-v="3" onclick="setRating(3)">★</span>
+      <span class="star" data-v="2" onclick="setRating(2)">★</span>
+      <span class="star" data-v="1" onclick="setRating(1)">★</span>
+    </div>
+    <div class="rating-text" id="ratingText">اختر عدد النجوم لتقييم تجربتك</div>
+    <div class="form-group" style="text-align:right;margin-top:20px">
+      <label>تعليق إضافي (اختياري)</label>
+      <textarea placeholder="شاركنا ملاحظاتك واقتراحاتك..." rows="3"></textarea>
+    </div>
+    <div class="success-msg" id="success-rating">✓ شكراً جزيلاً على تقييمك! آراؤكم تهمنا كثيراً وتساعدنا على التطوير.</div>
+    <button class="btn-primary" onclick="showSuccess('success-rating')">إرسال التقييم</button>
+    <button class="btn-secondary" onclick="gotoScreen('screen-home')">العودة للرئيسية</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: PATIENT PORTAL
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-patient-portal">
+  <div class="nav">
+    <div class="nav-title">بوابة المريض</div>
+    <button class="nav-back" onclick="gotoScreen('screen-home')">← الرئيسية</button>
+  </div>
+  <div style="padding:20px">
+    <p style="font-size:13px;color:var(--muted);text-align:center;margin-bottom:18px">اختر الخدمة المناسبة لك</p>
+    <div class="sub-grid" style="padding:0">
+      <div class="sub-card" onclick="gotoScreen('screen-patient-reg')">
+        <div class="sub-card-icon" style="background:#E1F5EE">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        </div>
+        <h4>تسجيل المرضى</h4>
+        <p>تسجيل بيانات المريض الجديد</p>
+      </div>
+      <div class="sub-card" onclick="gotoScreen('screen-services')">
+        <div class="sub-card-icon" style="background:#FAECE7">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#993C1D" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h4>خدماتنا</h4>
+        <p>استكشف جميع خدماتنا</p>
+      </div>
+    </div>
+    <button class="btn-secondary" onclick="gotoScreen('screen-home')" style="margin-top:8px">العودة للرئيسية</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: PATIENT REG
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-patient-reg">
+  <div class="nav">
+    <div class="nav-title">تسجيل المريض</div>
+    <button class="nav-back" onclick="gotoScreen('screen-patient-portal')">← رجوع</button>
+  </div>
+  <div class="form-wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="form-group"><label>الاسم</label><input type="text" placeholder="الاسم"/></div>
+      <div class="form-group"><label>اللقب</label><input type="text" placeholder="اللقب"/></div>
+    </div>
+    <div class="form-group">
+      <label>الجنس</label>
+      <select><option value="">اختر...</option><option>ذكر</option><option>أنثى</option></select>
+    </div>
+    <div class="form-group"><label>العمر</label><input type="number" placeholder="السن بالسنوات" min="1" max="120"/></div>
+    <div class="form-group"><label>البريد الإلكتروني</label><input type="email" placeholder="example@email.com"/></div>
+    <div class="form-group">
+      <label>الملف الطبي</label>
+      <div class="file-upload" onclick="this.querySelector('input').click()">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+        <p>رفع الملف الطبي (PDF)</p>
+        <input type="file" accept=".pdf,.jpg,.png" style="display:none" onchange="updateFileLabel(this)"/>
+      </div>
+    </div>
+    <div class="success-msg" id="success-preg">✓ تم تسجيل بيانات المريض بنجاح!</div>
+    <button class="btn-primary" onclick="showSuccess('success-preg')">إرسال</button>
+    <button class="btn-secondary" onclick="gotoScreen('screen-patient-portal')">رجوع</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: SERVICES
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-services">
+  <div class="nav">
+    <div class="nav-title">خدماتنا</div>
+    <button class="nav-back" onclick="gotoScreen('screen-patient-portal')">← رجوع</button>
+  </div>
+  <div style="padding:16px">
+    <div class="sub-grid" style="padding:0;grid-template-columns:1fr 1fr">
+      <div class="sub-card" onclick="gotoScreen('screen-elderly')">
+        <div class="sub-card-icon" style="background:#E1F5EE;font-size:24px">🧓</div>
+        <h4>رعاية كبار السن</h4>
+        <p>عناية متخصصة ومتواصلة</p>
+      </div>
+      <div class="sub-card" onclick="gotoScreen('screen-post-op')">
+        <div class="sub-card-icon" style="background:#E6F1FB;font-size:24px">🏥</div>
+        <h4>رعاية ما بعد العمليات</h4>
+        <p>متابعة ما بعد الجراحة</p>
+      </div>
+      <div class="sub-card" onclick="gotoScreen('screen-post-birth')">
+        <div class="sub-card-icon" style="background:#FBEAF0;font-size:24px">👶</div>
+        <h4>رعاية ما بعد الولادة</h4>
+        <p>دعم الأم والمولود</p>
+      </div>
+      <div class="sub-card" onclick="gotoScreen('screen-quick')">
+        <div class="sub-card-icon" style="background:#FAEEDA;font-size:24px">⚡</div>
+        <h4>خدمات سريعة</h4>
+        <p>حقن وقياسات وأكثر</p>
+      </div>
+      <div class="sub-card" style="grid-column:1/-1" onclick="gotoScreen('screen-lab')">
+        <div class="sub-card-icon" style="background:#EAF3DE;font-size:24px;width:auto;border-radius:12px;padding:10px">🧪 التحاليل الطبية</div>
+        <p style="margin-top:5px">إرسال واستقبال نتائج التحاليل</p>
+      </div>
+    </div>
+    <button class="btn-secondary" onclick="gotoScreen('screen-patient-portal')" style="margin-top:4px">رجوع</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: ELDERLY CARE
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-elderly">
+  <div class="nav">
+    <div class="nav-title">🧓 رعاية كبار السن</div>
+    <button class="nav-back" onclick="gotoScreen('screen-services')">← رجوع</button>
+  </div>
+  <div class="form-wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="form-group"><label>الاسم</label><input type="text" placeholder="الاسم"/></div>
+      <div class="form-group"><label>اللقب</label><input type="text" placeholder="اللقب"/></div>
+    </div>
+    <div class="form-group">
+      <label>الجنس</label>
+      <select><option value="">اختر...</option><option>ذكر</option><option>أنثى</option></select>
+    </div>
+    <div class="form-group"><label>رقم الهاتف</label><input type="tel" placeholder="05xxxxxxxx"/></div>
+    <div class="form-group">
+      <label>الحالة الصحية (اختر ما ينطبق)</label>
+      <div class="check-row">
+        <label class="check-item"><input type="checkbox"> سكري</label>
+        <label class="check-item"><input type="checkbox"> ضغط دم</label>
+        <label class="check-item"><input type="checkbox"> مقعد</label>
+        <label class="check-item"><input type="checkbox"> شلل نصفي</label>
+        <label class="check-item"><input type="checkbox"> خرف</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>مدة العناية</label>
+      <div class="time-row">
+        <div>
+          <label>الساعات يومياً</label>
+          <input type="number" placeholder="عدد الساعات" min="1" max="24"/>
+        </div>
+        <div>
+          <label>عدد الأيام</label>
+          <input type="number" placeholder="الأيام" min="1"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group"><label>رابط الموقع الجغرافي</label><input type="url" placeholder="https://maps.google.com/..."/></div>
+    <div class="success-msg" id="success-elderly">✓ تم استقبال طلبك! سيتواصل معك فريقنا خلال 30 دقيقة.</div>
+    <button class="btn-primary" onclick="showSuccess('success-elderly')">إرسال الطلب</button>
+    <button class="btn-secondary" onclick="gotoScreen('screen-services')">رجوع</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: POST-OP
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-post-op">
+  <div class="nav">
+    <div class="nav-title">🏥 رعاية ما بعد العمليات</div>
+    <button class="nav-back" onclick="gotoScreen('screen-services')">← رجوع</button>
+  </div>
+  <div class="form-wrap">
+    <div class="form-group"><label>الاسم الكامل</label><input type="text" placeholder="الاسم واللقب كاملاً"/></div>
+    <div class="form-group"><label>البريد الإلكتروني</label><input type="email" placeholder="example@email.com"/></div>
+    <div class="form-group"><label>نوع العملية الجراحية</label><input type="text" placeholder="اذكر نوع العملية..."/></div>
+    <div class="form-group"><label>الأمراض المصاحبة</label><input type="text" placeholder="إن وجدت، اذكرها هنا..."/></div>
+    <div class="form-group"><label>مدة الخدمة المطلوبة</label><input type="text" placeholder="مثال: 7 أيام، ساعتان يومياً"/></div>
+    <div class="form-group"><label>رابط الموقع الجغرافي</label><input type="url" placeholder="https://maps.google.com/..."/></div>
+    <div class="form-group" style="background:#E1F5EE;padding:14px;border-radius:10px">
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin:0">
+        <input type="checkbox" style="accent-color:var(--teal);width:18px;height:18px;flex-shrink:0">
+        <span style="font-size:13px;line-height:1.5">تأكيد الحجز والموافقة على شروط الخدمة</span>
+      </label>
+    </div>
+    <div class="success-msg" id="success-postop">✓ تم تأكيد الحجز! سيتواصل معك فريقنا المتخصص قريباً.</div>
+    <button class="btn-primary" onclick="showSuccess('success-postop')">إرسال وتأكيد الحجز</button>
+    <button class="btn-secondary" onclick="gotoScreen('screen-services')">رجوع</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: POST-BIRTH
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-post-birth">
+  <div class="nav">
+    <div class="nav-title">👶 رعاية ما بعد الولادة</div>
+    <button class="nav-back" onclick="gotoScreen('screen-services')">← رجوع</button>
+  </div>
+  <div class="form-wrap">
+    <div class="form-group"><label>الاسم الكامل</label><input type="text" placeholder="الاسم واللقب"/></div>
+    <div class="form-group"><label>رقم الهاتف</label><input type="tel" placeholder="05xxxxxxxx"/></div>
+    <div class="form-group"><label>البريد الإلكتروني</label><input type="email" placeholder="example@email.com"/></div>
+    <div class="form-group"><label>رابط الموقع الجغرافي</label><input type="url" placeholder="https://maps.google.com/..."/></div>
+    <div class="form-group"><label>أمراض مصاحبة (إن وجدت)</label><textarea placeholder="اذكري أي أمراض أو حالات صحية خاصة..." rows="2"></textarea></div>
+    <div class="form-group"><label>مدة العناية المطلوبة</label><input type="text" placeholder="مثال: أسبوعان، 3 ساعات يومياً"/></div>
+    <div class="success-msg" id="success-birth">✓ تم استقبال طلبك! أهلاً بالأم الجديدة 💚</div>
+    <button class="btn-primary" onclick="showSuccess('success-birth')">إرسال</button>
+    <button class="btn-secondary" onclick="gotoScreen('screen-services')">رجوع</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: QUICK SERVICES
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-quick">
+  <div class="nav">
+    <div class="nav-title">⚡ خدمات تمريضية سريعة</div>
+    <button class="nav-back" onclick="gotoScreen('screen-services')">← رجوع</button>
+  </div>
+  <div style="padding:16px">
+    <div class="sub-grid" style="padding:0;grid-template-columns:1fr 1fr">
+      <div class="sub-card" onclick="gotoScreen('screen-injection')">
+        <div class="sub-card-icon" style="background:#FAECE7;font-size:26px">💉</div>
+        <h4>الحقن</h4>
+        <p>حقن علاجية منزلية</p>
+      </div>
+      <div class="sub-card" onclick="gotoScreen('screen-vitals')">
+        <div class="sub-card-icon" style="background:#E1F5EE;font-size:26px">📊</div>
+        <h4>قياس العوامل الحيوية</h4>
+        <p>سكر • ضغط • حرارة</p>
+      </div>
+      <div class="sub-card" style="grid-column:1/-1" onclick="gotoScreen('screen-catheter')">
+        <div class="sub-card-icon" style="background:#E6F1FB;font-size:26px;width:auto;border-radius:12px;padding:10px">🔧 تركيب قسطرة بولية</div>
+        <p style="margin-top:5px">خدمة متخصصة في المنزل</p>
+      </div>
+    </div>
+    <button class="btn-secondary" onclick="gotoScreen('screen-services')" style="margin-top:4px">رجوع</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: INJECTION
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-injection">
+  <div class="nav">
+    <div class="nav-title">💉 طلب الحقن</div>
+    <button class="nav-back" onclick="gotoScreen('screen-quick')">← رجوع</button>
+  </div>
+  <div class="form-wrap">
+    <div class="required-badge">
+      ⚠️ <span>الوصفة الطبية <strong>إلزامية</strong> لطلب خدمة الحقن</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="form-group"><label>الاسم</label><input type="text" placeholder="الاسم"/></div>
+      <div class="form-group"><label>اللقب</label><input type="text" placeholder="اللقب"/></div>
+    </div>
+    <div class="form-group"><label>البريد الإلكتروني</label><input type="email" placeholder="example@email.com"/></div>
+    <div class="form-group">
+      <label>الوصفة الطبية <span style="color:#D85A30;font-weight:700">*</span></label>
+      <div class="file-upload" style="border-color:#D85A30;border-width:2px" onclick="this.querySelector('input').click()">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#993C1D" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <p style="color:#993C1D;font-weight:500">انقر لرفع الوصفة الطبية — إلزامي (PDF/صورة)</p>
+        <input type="file" accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="updateFileLabel(this)"/>
+      </div>
+    </div>
+    <div class="form-group"><label>رابط الموقع الجغرافي</label><input type="url" placeholder="https://maps.google.com/..."/></div>
+    <div class="success-msg" id="success-inj">✓ تم إرسال الطلب! سيصل الممرض المتخصص إليك قريباً.</div>
+    <button class="btn-primary" onclick="showSuccess('success-inj')">إرسال الطلب</button>
+    <button class="btn-secondary" onclick="gotoScreen('screen-quick')">رجوع</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: VITALS
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-vitals">
+  <div class="nav">
+    <div class="nav-title">📊 قياس العوامل الحيوية</div>
+    <button class="nav-back" onclick="gotoScreen('screen-quick')">← رجوع</button>
+  </div>
+  <div class="form-wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="form-group"><label>الاسم</label><input type="text" placeholder="الاسم"/></div>
+      <div class="form-group"><label>اللقب</label><input type="text" placeholder="اللقب"/></div>
+    </div>
+    <div class="form-group"><label>البريد الإلكتروني</label><input type="email" placeholder="example@email.com"/></div>
+    <div class="form-group">
+      <label>القياسات المطلوبة (اختر ما تريد)</label>
+      <div class="check-row">
+        <label class="check-item"><input type="checkbox"> سكر الدم</label>
+        <label class="check-item"><input type="checkbox"> ضغط الدم</label>
+        <label class="check-item"><input type="checkbox"> درجة الحرارة</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>الوصفة الطبية (اختياري)</label>
+      <div class="file-upload" onclick="this.querySelector('input').click()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p>رفع الوصفة إن وجدت (اختياري)</p>
+        <input type="file" accept=".pdf,.jpg,.png" style="display:none" onchange="updateFileLabel(this)"/>
+      </div>
+    </div>
+    <div class="form-group"><label>رابط الموقع الجغرافي</label><input type="url" placeholder="https://maps.google.com/..."/></div>
+    <div class="success-msg" id="success-vitals">✓ تم الطلب! سيصل الممرض لقياس العوامل الحيوية.</div>
+    <button class="btn-primary" onclick="showSuccess('success-vitals')">إرسال الطلب</button>
+    <button class="btn-secondary" onclick="gotoScreen('screen-quick')">رجوع</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: CATHETER
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-catheter">
+  <div class="nav">
+    <div class="nav-title">🔧 تركيب قسطرة بولية</div>
+    <button class="nav-back" onclick="gotoScreen('screen-quick')">← رجوع</button>
+  </div>
+  <div class="form-wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="form-group"><label>الاسم</label><input type="text" placeholder="الاسم"/></div>
+      <div class="form-group"><label>اللقب</label><input type="text" placeholder="اللقب"/></div>
+    </div>
+    <div class="form-group"><label>البريد الإلكتروني</label><input type="email" placeholder="example@email.com"/></div>
+    <div class="form-group">
+      <label>الوصفة الطبية (اختياري)</label>
+      <div class="file-upload" onclick="this.querySelector('input').click()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <p>رفع الوصفة الطبية (اختياري)</p>
+        <input type="file" accept=".pdf,.jpg,.png" style="display:none" onchange="updateFileLabel(this)"/>
+      </div>
+    </div>
+    <div class="form-group"><label>رابط الموقع الجغرافي</label><input type="url" placeholder="https://maps.google.com/..."/></div>
+    <div class="success-msg" id="success-cath">✓ تم استقبال الطلب! الممرض المتخصص في الطريق إليك.</div>
+    <button class="btn-primary" onclick="showSuccess('success-cath')">إرسال الطلب</button>
+    <button class="btn-secondary" onclick="gotoScreen('screen-quick')">رجوع</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: LAB
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-lab">
+  <div class="nav">
+    <div class="nav-title">🧪 التحاليل الطبية</div>
+    <button class="nav-back" onclick="gotoScreen('screen-services')">← رجوع</button>
+  </div>
+  <div class="form-wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="form-group"><label>الاسم</label><input type="text" placeholder="الاسم"/></div>
+      <div class="form-group"><label>اللقب</label><input type="text" placeholder="اللقب"/></div>
+    </div>
+    <div class="form-group"><label>رابط الموقع الجغرافي</label><input type="url" placeholder="https://maps.google.com/..."/></div>
+    <div class="form-group">
+      <label>ورقة التحاليل الطبية المطلوبة</label>
+      <div class="file-upload" onclick="this.querySelector('input').click()">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        <p>رفع ورقة التحاليل المطلوبة (PDF / صورة)</p>
+        <input type="file" accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="updateFileLabel(this)"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>إرسال النتائج (عند توفرها)</label>
+      <div class="file-upload" style="border-color:#185FA5" onclick="this.querySelector('input').click()">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p style="color:#185FA5">رفع نتائج التحاليل (PDF)</p>
+        <input type="file" accept=".pdf,.jpg,.png" style="display:none" onchange="updateFileLabel(this)"/>
+      </div>
+    </div>
+    <div class="success-msg" id="success-lab">✓ تم إرسال طلب التحاليل! سيتواصل معك الفريق لتحديد موعد.</div>
+    <button class="btn-primary" onclick="showSuccess('success-lab')">إرسال</button>
+    <button class="btn-secondary" onclick="gotoScreen('screen-services')">رجوع</button>
+  </div>
+</div>
+
+<script>
+var loggedIn = false;
+var pendingScreen = null;
+
+function gotoScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  var el = document.getElementById(id);
+  if (el) { el.classList.add('active'); window.scrollTo(0, 0); }
+}
+
+function requireLogin(screen) {
+  if (loggedIn) { gotoScreen(screen); return; }
+  pendingScreen = screen;
+  document.getElementById('loginModal').style.display = 'flex';
+}
+
+function doLogin() {
+  var email = document.getElementById('loginEmail').value.trim();
+  var pass = document.getElementById('loginPass').value.trim();
+  if (!email || !pass) { alert('يرجى ملء الإيميل وكلمة المرور'); return; }
+  loggedIn = true;
+  document.getElementById('loginModal').style.display = 'none';
+  if (pendingScreen) { gotoScreen(pendingScreen); pendingScreen = null; }
+}
+
+function closeModal() {
+  document.getElementById('loginModal').style.display = 'none';
+  pendingScreen = null;
+}
+
+function showSuccess(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = 'block';
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(() => { el.style.display = 'none'; }, 5000);
+}
+
+var currentRating = 0;
+function setRating(v) {
+  currentRating = v;
+  var labels = ['', 'رديء 😞', 'مقبول 😐', 'جيد 🙂', 'جيد جداً 😊', 'ممتاز! 🌟'];
+  document.getElementById('ratingText').textContent = labels[v];
+  document.querySelectorAll('.star').forEach(s => {
+    var sv = parseInt(s.getAttribute('data-v'));
+    s.classList.toggle('active', sv <= v);
+  });
+}
+
+function sendMsg() {
+  var input = document.getElementById('chatInput');
+  var msg = input.value.trim();
+  if (!msg) return;
+  var area = document.getElementById('chatArea');
+  var sent = document.createElement('div');
+  sent.className = 'msg-bubble sent';
+  sent.textContent = msg;
+  area.appendChild(sent);
+  input.value = '';
+  area.scrollTop = area.scrollHeight;
+  setTimeout(() => {
+    var reply = document.createElement('div');
+    reply.className = 'msg-bubble';
+    reply.textContent = 'شكراً على استشارتك! سيرد عليك أحد الممرضين المتخصصين في أقرب وقت ممكن. 💚';
+    area.appendChild(reply);
+    area.scrollTop = area.scrollHeight;
+  }, 1400);
+}
+
+function updateFileLabel(input) {
+  if (input.files && input.files[0]) {
+    var p = input.closest('.file-upload').querySelector('p');
+    if (p) p.textContent = '✓ تم اختيار: ' + input.files[0].name;
+  }
+}
+
+// Close modal on overlay click
+document.getElementById('loginModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>
